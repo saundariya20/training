@@ -1,0 +1,531 @@
+C:\Users\SAUNDM\Downloads\mysql-5.6.47-winx64 (1)\mysql-5.6.47-winx64\bin>mysqld
+2022-02-14 10:22:38 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2022-02-14 10:22:38 0 [Note] --secure-file-priv is set to NULL. Operations related to importing and exporting data are disabled
+2022-02-14 10:22:38 0 [Note] mysqld (mysqld 5.6.47) starting as process 23724 ...
+
+C:\Users\SAUNDM\Downloads\mysql-5.6.47-winx64 (1)\mysql-5.6.47-winx64\bin>mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.6.47 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database saund;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use saund;
+Database changed
+mysql> Create table Emp(empId numeric(5),empName varchar(20),deptCode numeric(5));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>
+mysql> insert into emp values(1001,'Naveen',Null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(1001,'Kumar',Null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> Alter table emp ADD managerID numeric(5);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++-------+---------+----------+-----------+
+| empId | empName | deptCode | managerID |
++-------+---------+----------+-----------+
+|  1001 | Naveen  |     NULL |      NULL |
+|  1001 | Kumar   |     NULL |      NULL |
++-------+---------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> alter table emp modify deptCode varchar(10);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> alter table emp rename column deptCode to DepartmentId
+    -> alter table emp rename column deptCode to DepartmentId;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column deptCode to DepartmentId
+alter table emp rename column deptCode to Depart' at line 1
+mysql> alter table emp change column deptCode to DepartmentId;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to DepartmentId' at line 1
+mysql> alter table emp change column deptCode DepartmentId;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> ALTER TABLE Emp CHANGE COLUMN deptCode departmentId varchar(20);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> alter table emp drop managerID;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc emp;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| empId        | decimal(5,0) | YES  |     | NULL    |       |
+| empName      | varchar(20)  | YES  |     | NULL    |       |
+| departmentId | varchar(20)  | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from emp;
++-------+---------+--------------+
+| empId | empName | departmentId |
++-------+---------+--------------+
+|  1001 | Naveen  | NULL         |
+|  1001 | Kumar   | NULL         |
++-------+---------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> truncate table emp;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from emp;
+Empty set (0.00 sec)
+
+mysql> create table emp(empid numeric(7) constraint emp pkey primary key,
+    -> empname varchar(30),
+    -> email varchar(30),
+    -> phone varchar(30),
+    -> salary varchar(30),
+    -> deptcode varchar(30),
+    -> managerempid varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint emp pkey primary key,
+empname varchar(30),
+email varchar(30),
+phone v' at line 1
+mysql> create table emp(empid numeric(7) constraint PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30),
+    -> phone varchar(30),
+    -> salary varchar(30),
+    -> deptcode varchar(30),
+    -> managerempid varchar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint PRIMARY KEY,
+empname varchar(30),
+email varchar(30),
+phone varchar(30' at line 1
+mysql> create table emp(empid numeric(7) primary key,
+    -> empname varchar(30),
+    -> email varchar(30),
+    -> phone varchar(30),
+    -> salary varchar(30),
+    -> deptcode varchar(30),
+    -> managerempid varchar(30));
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql> create table empl(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30),
+    -> phone varchar(30),
+    -> salary varchar(30),
+    -> deptcode varchar(30),
+    -> managerempid varchar(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table empl;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2),
+    -> deptcode numeric(3),
+    -> ManagerEmpId numeric(7));
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2),
+    -> deptcode numeric(3),
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 6
+mysql> create table empl(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2),
+    -> deptcode numeric(3),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 6
+mysql> create table empl(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30),
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2),
+    -> deptcode numeric(3),
+    -> ManagerEmpId numeric(7));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into empl values(1001,'Pallavi Lakshmi','pallavi@capgemini.com',7042866186,20000.00,10,null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into empl values(1001,'saundariya','saund@capgemini.com',9789286078,20000.00,10,null);
+ERROR 1062 (23000): Duplicate entry '1001' for key 'PRIMARY'
+mysql> insert into empl values(1002,'saundariya','saund@capgemini.com',9789286078,20000.00,10,null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from empl;
++-------+-----------------+-----------------------+------------+----------+----------+--------------+
+| empid | empname         | email                 | phone      | salary   | deptcode | ManagerEmpId |
++-------+-----------------+-----------------------+------------+----------+----------+--------------+
+|  1001 | Pallavi Lakshmi | pallavi@capgemini.com | 7042866186 | 20000.00 |       10 |         NULL |
+|  1002 | saundariya      | saund@capgemini.com   | 9789286078 | 20000.00 |       10 |         NULL |
++-------+-----------------+-----------------------+------------+----------+----------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> drop table emp;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2),
+    -> deptcode numeric(3),
+    -> ManagerEmpId numeric(7));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc emp;
++--------------+---------------+------+-----+---------+-------+
+| Field        | Type          | Null | Key | Default | Extra |
++--------------+---------------+------+-----+---------+-------+
+| empid        | decimal(7,0)  | NO   | PRI | NULL    |       |
+| empname      | varchar(30)   | NO   |     | NULL    |       |
+| email        | varchar(30)   | YES  | UNI | NULL    |       |
+| phone        | decimal(10,0) | YES  |     | NULL    |       |
+| salary       | decimal(10,2) | YES  |     | NULL    |       |
+| deptcode     | decimal(3,0)  | YES  |     | NULL    |       |
+| ManagerEmpId | decimal(7,0)  | YES  |     | NULL    |       |
++--------------+---------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> insert into emp values(1002,'saund@capgemini.com',9789286078,20000.00,10,null);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into emp values(1002,NULL,'saund@capgemini.com',9789286078,20000.00,10,null);
+ERROR 1048 (23000): Column 'empname' cannot be null
+mysql> drop table emp;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> [11:37] R, Naveen Kumar
+    -> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2)check (salary > 10000),
+    -> deptcode numeric(3) references dept(depCode),
+    -> ManagerEmpId numeric(7) references emp(empid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[11:37] R, Naveen Kumar
+create table emp(empid numeric(7) PRIMARY KEY,
+empname v' at line 1
+mysql>
+mysql> [11:37] R, Naveen Kumar
+    -> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2)check (salary > 10000),
+    -> deptcode numeric(3) references dept(depCode),
+    -> ManagerEmpId numeric(7) references emp(empid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[11:37] R, Naveen Kumar
+create table emp(empid numeric(7) PRIMARY KEY,
+empname v' at line 1
+mysql>
+mysql> [11:37] R, Naveen Kumar
+    -> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2)check (salary > 10000),
+    -> deptcode numeric(3) references dept(depCode),
+    -> ManagerEmpId numeric(7) references emp(empid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[11:37] R, Naveen Kumar
+create table emp(empid numeric(7) PRIMARY KEY,
+empname v' at line 1
+mysql>
+mysql> [11:37] R, Naveen Kumar
+    -> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2)check (salary > 10000),
+    -> deptcode numeric(3) references dept(depCode),
+    -> ManagerEmpId numeric(7) references emp(empid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[11:37] R, Naveen Kumar
+create table emp(empid numeric(7) PRIMARY KEY,
+empname v' at line 1
+mysql>
+mysql> create table emp(empid numeric(7) PRIMARY KEY,
+    -> empname varchar(30) not null,
+    -> email varchar(30) unique,
+    -> phone numeric(10),
+    -> salary numeric(10,2)check (salary > 10000),
+    -> deptcode numeric(3) references dept(depCode),
+    -> ManagerEmpId numeric(7) references emp(empid));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table department(departmentcode varchar(10) PRIMARY KEY,departmentname varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table project(projectid varchar(20) PRIMARY KEY,projectname varchar2(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(50))' at line 1
+mysql> create table project(projectid varchar(20) PRIMARY KEY,projectname varchar 2(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2(50))' at line 1
+mysql> create table project(projectid varchar(20) PRIMARY KEY,projectname varchar(50));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table employee(employeenumber number(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(10)check(designation='ceo' or designation='md' or designation='m' or designation='tl' or designation='sse' or designation='se'),doj date,salary number(10,2)check(salary>0 or salary <> null),manageremployeenumber number(10),departmentcode varchar(10) references department(departmentcode));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(10)' at line 1
+mysql> create table employee(employeenumber numericx(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(10)check(designation='ceo' or designation='md' or designation='m' or designation='tl' or designation='sse' or designation='se'),doj date,salary numeric(10,2)check(salary>0 or salary <> null),manageremployeenumber number(10),departmentcode varchar(10) references department(departmentcode));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'numericx(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(1' at line 1
+mysql> create table employee(employeenumber numeric(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(10)check(designation='ceo' or designation='md' or designation='m' or designation='tl' or designation='sse' or designation='se'),doj date,salary numeric(10,2)check(salary>0 or salary <> null),manageremployeenumber number(10),departmentcode varchar(10) references department(departmentcode));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(10),departmentcode varchar(10) references department(departmentcode))' at line 1
+mysql> create table employee(employeenumber numeric(10) PRIMARY KEY,employeename varchar(50),DOB date,designation varchar(10)check(designation='ceo' or designation='md' or designation='m' or designation='tl' or designation='sse' or designation='se'),doj date,salary numeric(10,2)check(salary>0 or salary <> null),manageremployeenumber numeric(10),departmentcode varchar(10) references department(departmentcode));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ALTER TABLE EMPLOYEE
+    -> ADD CONSTRAINT EMPLOYEE_FK2 FOREIGN KEY
+    -> (ManagerEmployeeNumber)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> ALTER TABLE employee
+    ->
+    -> manageremployeenumber
+    -> REFERENCES employee (employeenumber);x
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manageremployeenumber
+REFERENCES employee (employeenumber)' at line 3
+    -> ALTER TABLE employee FOREIGN KEY
+    -> manageremployeenumber reference employee(employeenumber);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'x
+ALTER TABLE employee FOREIGN KEY
+manageremployeenumber reference employee(empl' at line 1
+mysql> ALTER TABLE EMPLOYEE
+    -> ADD CONSTRAINT EMPLOYEE_FK2 FOREIGN KEY
+    -> (Manageremployeenumber)
+    -> REFERENCES EMPLOYEE (EMPLOYEENUMBER);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE EMPLOYEEPROJECTS
+    -> (
+    -> EMPLOYEENUMBER NUMBER(10) NOT NULL
+    -> , PROJECTID VARCHAR2(10) NOT NULL
+    -> , STARTDATE DATE
+    -> , ENDDATE DATE
+    -> , CONSTRAINT EMPLOYEEPROJECT_PK PRIMARY KEY (EMPLOYEENUMBER, PROJECTID)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER(10) NOT NULL
+, PROJECTID VARCHAR2(10) NOT NULL
+, STARTDATE DATE
+, ENDDATE' at line 3
+mysql> CREATE TABLE EMPLOYEEPROJECTS
+    -> (
+    -> EMPLOYEENUMBER NUMBER(10) NOT NULL
+    -> , PROJECTID VARCHAR2(10) NOT NULL
+    -> , STARTDATE DATE
+    -> , ENDDATE DATE
+    -> , EMPLOYEEPROJECT_PK PRIMARY KEY (EMPLOYEENUMBER, PROJECTID)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER(10) NOT NULL
+, PROJECTID VARCHAR2(10) NOT NULL
+, STARTDATE DATE
+, ENDDATE' at line 3
+mysql> CREATE TABLE EMPLOYEEPROJECTS
+    -> (
+    -> EMPLOYEENUMBER NUMERIC(10) NOT NULL
+    -> , PROJECTID VARCHAR2(10) NOT NULL
+    -> , STARTDATE DATE
+    -> , ENDDATE DATE
+    -> , CONSTRAINT EMPLOYEEPROJECT_PK PRIMARY KEY (EMPLOYEENUMBER, PROJECTID)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VARCHAR2(10) NOT NULL
+, STARTDATE DATE
+, ENDDATE DATE
+, CONSTRAINT EMPLOYEEPROJE' at line 4
+mysql> CREATE TABLE EMPLOYEEPROJECTS
+    -> (
+    -> EMPLOYEENUMBER NUMERIC(10) NOT NULL
+    -> , PROJECTID VARCHAR(10) NOT NULL
+    -> , STARTDATE DATE
+    -> , ENDDATE DATE
+    -> , CONSTRAINT EMPLOYEEPROJECT_PK PRIMARY KEY (EMPLOYEENUMBER, PROJECTID)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> ALTER TABLE EMPLOYEEPROJECTS
+    -> ADD CONSTRAINT EMPLOYEEPROJECTS_FK1 FOREIGN KEY (EMPLOYEENUMBER)
+    -> REFERENCES EMPLOYEE (EMPLOYEENUMBER);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEEPROJECTS
+    -> ADD CONSTRAINT EMPLOYEEPROJECTS_FK2 FOREIGN KEY
+    -> (PROJECTID)
+    -> REFERENCES PROJECT(PROJECTID);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE ITEM
+    -> (
+    -> ITEMCODE VARCHAR(10) CONSTRAINT ITEM_PK PRIMARY KEY
+    -> , ITEMNAME VARCHAR(200) CONSTRAINT ITEM_NOT_NULL NOT NULL
+    -> , MANUFACTURERNAME VARCHAR(200)
+    -> , UNITPRICE NUMERIC(10,2) CONSTRAINT UNITPRICE_CHECK CHECK(UNITPRICE>0)
+    -> , MANUFACTURINGYEAR DATE
+    -> , ITEMCATEGORY VARCHAR(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ITEM_PK PRIMARY KEY
+, ITEMNAME VARCHAR(200) CONSTRAINT ITEM_NOT_NULL ' at line 3
+mysql> CREATE TABLE ITEM
+    -> (
+    -> ITEMCODE VARCHAR(10) CONSTRAINT ITEM_PK PRIMARY KEY
+    -> , ITEMNAME VARCHAR(20) CONSTRAINT ITEM_NOT_NULL NOT NULL
+    -> , MANUFACTURERNAME VARCHAR(200)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ITEM_PK PRIMARY KEY
+, ITEMNAME VARCHAR(20) CONSTRAINT ITEM_NOT_NULL N' at line 3
+mysql> CREATE TABLE ITEM
+    -> (
+    -> ITEMCODE VARCHAR(10) CONSTRAINT ITEM_PK PRIMARY KEY
+    -> , ITEMNAME VARCHAR(20) CONSTRAINT ITEM_NOT_NULL NOT NULL
+    -> , MANUFACTURERNAME VARCHAR(20)
+    -> , UNITPRICE NUMERIC(10,2) CONSTRAINT UNITPRICE_CHECK CHECK(UNITPRICE>0)
+    -> , MANUFACTURINGYEAR DATE
+    -> , ITEMCATEGORY VARCHAR(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ITEM_PK PRIMARY KEY
+, ITEMNAME VARCHAR(20) CONSTRAINT ITEM_NOT_NULL N' at line 3
+mysql> CREATE TABLE ITEM
+    -> (
+    -> ITEMCODE VARCHAR(10) CONSTRAINT ITEM_PK PRIMARY KEY
+    -> , ITEMNAME VARCHAR(20)  NOT NULL
+    -> , MANUFACTURERNAME VARCHAR(20)
+    -> , UNITPRICE NUMERIC(10,2) CONSTRAINT UNITPRICE_CHECK CHECK(UNITPRICE>0)
+    -> , MANUFACTURINGYEAR DATE
+    -> , ITEMCATEGORY VARCHAR(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ITEM_PK PRIMARY KEY
+, ITEMNAME VARCHAR(20)  NOT NULL
+, MANUFACTURERNA' at line 3
+mysql> CREATE TABLE ITEM
+    -> (
+    -> ITEMCODE VARCHAR(10) PRIMARY KEY
+    -> , ITEMNAME VARCHAR(20)  NOT NULL
+    -> , MANUFACTURERNAME VARCHAR(20)
+    -> , UNITPRICE NUMERIC(10,2) CHECK(UNITPRICE>0)
+    -> , MANUFACTURINGYEAR DATE
+    -> , ITEMCATEGORY VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE CUSTOMER
+    -> (
+    -> CUSTOMERID NUMBER  PRIMARY KEY
+    -> , CUSTOMERNAME VARCHAR(20)  NOT NULL
+    -> , ADDRESS VARCHAR(30)
+    -> , PHONENUMBER VARCHAR(30)
+    -> , CUSTOMERMAILID VARCHAR(40)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER  PRIMARY KEY
+, CUSTOMERNAME VARCHAR(20)  NOT NULL
+, ADDRESS VARCHAR(30)
+,' at line 3
+mysql> CREATE TABLE CUSTOMER
+    -> (
+    -> CUSTOMERID NUMBER  PRIMARY KEY
+    -> , CUSTOMERNAME VARCHAR(20)  NOT NULL
+    -> , ADDRESS VARCHAR(20)
+    -> , PHONENUMBER VARCHAR(20)
+    -> , CUSTOMERMAILID VARCHAR(20)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER  PRIMARY KEY
+, CUSTOMERNAME VARCHAR(20)  NOT NULL
+, ADDRESS VARCHAR(20)
+,' at line 3
+mysql> CREATE TABLE CUSTOMER
+    -> (
+    -> CUSTOMERID NUMERIC  PRIMARY KEY
+    -> , CUSTOMERNAME VARCHAR(20)  NOT NULL
+    -> , ADDRESS VARCHAR(20)
+    -> , PHONENUMBER VARCHAR(20)
+    -> , CUSTOMERMAILID VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE ORDERMASTER
+    -> (
+    -> ORDERID NUMBER CONSTRAINT ORDERMASTER_PK PRIMARY KEY
+    -> , ORDERDATE DATE CONSTRAINT ORDERDATE_NOT_NULL NOT NULL
+    -> , TOTALORDERAMOUNT NUMBER(10,2) CONSTRAINT ORDERMASTER_CHK1 CHECK(TOTALORDERAMOUNT>0) CONSTRAINT T_ORDER_AMOUNT_NOT_NULL NOT NULL
+    -> , CUSTOMERID NUMBER CONSTRAINT ORDER_MASTER_CUST_FK1 REFERENCES CUSTOMER(CUSTOMERID) CONSTRAINT CUSTOMERID_NOT_NULL NOT NULL
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER CONSTRAINT ORDERMASTER_PK PRIMARY KEY
+, ORDERDATE DATE CONSTRAINT ORDERDA' at line 3
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> CREATE TABLE ORDERTRANSACTION
+    -> (
+    -> ORDERID NUMBER CONSTRAINT ORDERTRANSACTION_FK1 REFERENCES ORDERMASTER(ORDERID)
+    -> , ITEMCODE VARCHAR2(10) CONSTRAINT ORDERTRANSACTION_FK2 REFERENCES ITEM(ITEMCODE)
+    -> , QTYORDERED NUMBER(2) CONSTRAINT QTYORDERED_CHECK CHECK(QTYORDERED>0)
+    -> , CONSTRAINT ORDERTRANSACTION_PK PRIMARY KEY (ORDERID, ITEMCODE)
+    -> , QTYORDERED NUMBER(2) CONSTRAINT QTYORDERED_CHECK CHECK(QTYORDERED>0)
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NUMBER CONSTRAINT ORDERTRANSACTION_FK1 REFERENCES ORDERMASTER(ORDERID)
+, ITEMCOD' at line 3
+mysql> CREATE TABLE ORDERTRANSACTION
+    -> (
+    -> ORDERID NUMERIC REFERENCES ORDERMASTER(ORDERID)
+    -> , ITEMCODE VARCHAR(10) REFERENCES ITEM(ITEMCODE)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> CREATE TABLE ORDERMASTER
+    -> (
+    -> ORDERID NUMERIC PRIMARY KEY
+    -> , ORDERDATE DATE  NOT NULL
+    -> , TOTALORDERAMOUNT NUMERIC(10,2) CHECK(TOTALORDERAMOUNT>0) CONSTRAINT T_ORDER_AMOUNT_NOT_NULL NOT NULL
+    -> , CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID) NOT NULL
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT T_ORDER_AMOUNT_NOT_NULL NOT NULL
+, CUSTOMERID NUMERIC  REFERENCES CUS' at line 5
+mysql> CREATE TABLE ORDERMASTER
+    -> (
+    -> ORDERID NUMERIC PRIMARY KEY
+    -> , ORDERDATE DATE  NOT NULL
+    -> , TOTALORDERAMOUNT NUMERIC(10,2) CHECK(TOTALORDERAMOUNT>0) NOT NULL
+    -> , CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID) NOT NULL
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL
+, CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID) NOT NULL
+)' at line 5
+mysql> CREATE TABLE ORDERMASTER
+    -> (
+    -> ORDERID NUMERIC PRIMARY KEY
+    -> , ORDERDATE DATE  NOT NULL
+    -> , TOTALORDERAMOUNT NUMERIC(10,2) CHECK(TOTALORDERAMOUNT>0) NOT NULL
+    -> , CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID) WHERE CUSTOMERID NOT NULL
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NOT NULL
+, CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID) WHERE CUSTOMERID ' at line 5
+mysql>
+mysql> CREATE TABLE ORDERMASTER
+    -> (
+    -> ORDERID NUMERIC PRIMARY KEY
+    -> , ORDERDATE DATE  NOT NULL
+    -> , TOTALORDERAMOUNT NUMERIC(10,2) CHECK(TOTALORDERAMOUNT>0) CONSTRAINT T_ORDER_AMOUNT_NOT_NULL NOT NULL
+    -> , CUSTOMERID NUMERIC  REFERENCES CUSTOMER(CUSTOMERID)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT T_ORDER_AMOUNT_NOT_NULL NOT NULL
+, CUSTOMERID NUMERIC  REFERENCES CUS' at line 5
